@@ -7,7 +7,10 @@ package fr.uvsq.cprog.collex;
 public class App 
 {
     public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+    {   
+        AdresseIP ad = new AdresseIP("192.192.192");
+        NomMachine nm = new NomMachine("www.uvsq.fr");
+        DnsItem di = new DnsItem(nm, ad);
+        System.out.println(di.getDns());
     }
 }
