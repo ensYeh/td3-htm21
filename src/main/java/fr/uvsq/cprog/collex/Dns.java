@@ -47,6 +47,18 @@ public class Dns {
         return items;
     }
 
+    // Méthode écrite avec l'aide de ChatGPT pour permettre de filtrer les addresses en fonction du nom de la machine/domaine
+    public List<DnsItem> getItems(String domaine) {
+        List<DnsItem> res = new ArrayList<>();
+        for (DnsItem element : items) {
+            NomMachine nm = new NomMachine(element.getNom());
+            if (nm.getDomaine().equals(domaine)) {
+                res.add(element);
+            }
+        }
+        return res;
+    }
+
     public DnsItem getItem(NomMachine nom) {
         for (DnsItem item : items) {
             if (item.getNom().equals(nom.getNomMachine())) {

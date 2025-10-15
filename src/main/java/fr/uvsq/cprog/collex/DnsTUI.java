@@ -7,12 +7,15 @@ public class DnsTUI {
         }
         String ligne = input.trim();
         if (ligne.isEmpty()) {
-            return new CmdErreur("Entrée Invalide");;
+            return new CmdErreur("Entrée Invalide");
         }
         String[] parts = ligne.split("\\s+");
         String cmd = parts[0];
 
-        if (cmd.equals("add")) {
+        if (cmd.equals("quit")) {
+            return new CmdQuit();
+
+        } else if (cmd.equals("add")) {
             if (parts.length != 3) {
                 return new CmdErreur("Commande invalide, format attendu : add adresseIP domaine");
             }
@@ -26,13 +29,14 @@ public class DnsTUI {
             } else {
                 return new CmdErreur("Commande invalide, format attendu : ls [-a] domaine");
             }
-
+            
         } else if (parts.length == 1 && ligne.matches("\\d+\\.\\d+\\.\\d+\\.\\d+")) {
-            return new CmdNomDomaine(ligne);
+            return new CmdIpNom(ligne);
 
         } else if (parts.length == 1 && ligne.contains(".")) {
-            return new CmdIP(ligne);
+            return new CmdNomIp(ligne);
         }
+
         return new CmdErreur("Commande invalide");
     }
 
