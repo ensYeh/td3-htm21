@@ -6,6 +6,8 @@ import java.util.Properties;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class Dns {
     private String fichier;
@@ -18,7 +20,9 @@ public class Dns {
         fichier = p.getProperty("fichier.dns");
 
         Path path = Path.of(fichier);
-        if (!Files.exists(path)) return;
+        if (!Files.exists(path)) {
+            return;
+        }
 
         for (String ligne : Files.readAllLines(path)) {
             if (ligne.length() == 0) {
@@ -31,15 +35,30 @@ public class Dns {
         }
     }
 
-    public void addItem(AdresseIP adresse, NomMachine nom) {
+    public void writeItem(AdresseIP adresse, NomMachine nom) {
+        String nouvelle_ligne = "\n"+nom.getNomMachine() + " " + adresse.getAdresseIP();
+        Path chemin = Paths.get("src/main/resources/dns.txt");
+        try {
+            java.nio.file.Files.writeString(chemin, nouvelle_ligne, StandardOpenOption.APPEND);
+        } catch (IOException erreur) {
+            System.out.println("ERREUR: " + erreur.getMessage());
+            return;
+        }
+    }
+
+    public String addItem(AdresseIP adresse, NomMachine nom) {
         if (getItem(nom) != null) {
-            throw new IllegalArgumentException("Le nom de machine existe déjà : " + nom.getNomMachine());
+            return "ERREUR : Le nom de machine existe déjà !\n";
         }
         if (getItem(adresse) != null) {
-            throw new IllegalArgumentException("L'adresse IP existe déjà : " + adresse.getAdresseIP());
+            return "ERREUR : L'adresse IP existe déjà !\n";
         }
+        
         DnsItem nouveau_item = new DnsItem(nom, adresse);
         items.add(nouveau_item);
+
+        writeItem(adresse, nom);
+        return "";
     }
 
     // Getters

@@ -9,6 +9,6 @@ public class CmdErreur implements Commande {
 
     @Override 
     public String execute(Dns dns) {
-        return "Erreur: " + message;
+        return "Erreur: " + message + "\n";
     } 
 }

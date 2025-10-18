@@ -11,8 +11,8 @@ public class CmdIpNom implements Commande {
     public String execute(Dns dns) {
         DnsItem resultat = dns.getItem(new AdresseIP(ip));
         if (resultat == null) {
-            return "Pas de machine à l'adresse " + ip;
+            return "Pas de machine à l'adresse " + ip +"\n";
         }
-        return resultat.getNom();
+        return resultat.getNom() + "\n";
     }
 }

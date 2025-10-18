@@ -11,7 +11,7 @@ public class CmdAdd implements Commande {
 
     @Override
     public String execute(Dns dns) {
-        dns.addItem(new AdresseIP(ip), new NomMachine(nqmachine));
-        return "";
+        String res = dns.addItem(new AdresseIP(ip), new NomMachine(nqmachine));
+        return res;
     }
 }

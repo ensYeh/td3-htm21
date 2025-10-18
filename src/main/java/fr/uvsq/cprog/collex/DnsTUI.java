@@ -17,7 +17,10 @@ public class DnsTUI {
 
         } else if (cmd.equals("add")) {
             if (parts.length != 3) {
-                return new CmdErreur("Commande invalide, format attendu : add adresseIP domaine");
+                return new CmdErreur("Commande invalide, format attendu : add <adr.es.se.ip> <nom.qualifié.machine>");
+            }
+            if (!parts[1].matches("\\d+\\.\\d+\\.\\d+\\.\\d+")) {
+                return new CmdErreur("Erreur : format attendu : add <adr.es.se.ip> <nom.qualifié.machine>");
             }
             return new CmdAdd(parts[1], parts[2]);
 
@@ -27,7 +30,7 @@ public class DnsTUI {
             } else if (parts.length == 2) {
                 return new CmdLs(parts[1], false);
             } else {
-                return new CmdErreur("Commande invalide, format attendu : ls [-a] domaine");
+                return new CmdErreur("Commande invalide, format attendu : ls [-a] <domaine>");
             }
             
         } else if (parts.length == 1 && ligne.matches("\\d+\\.\\d+\\.\\d+\\.\\d+")) {

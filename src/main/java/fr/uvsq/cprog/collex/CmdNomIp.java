@@ -11,8 +11,8 @@ public class CmdNomIp implements Commande {
     public String execute(Dns dns) {
         DnsItem resultat = dns.getItem(new NomMachine(nom));
         if (resultat == null) {
-            return "Pas d'adresse associé à " + nom;
+            return "Pas d'adresse associé à " + nom +"\n";
         }
-        return resultat.getAdresse();
+        return resultat.getAdresse() + "\n";
     }
 }
